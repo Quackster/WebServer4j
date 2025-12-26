@@ -57,7 +57,7 @@ public class HttpRequestHandler {
      * Core request handler for HTTP requests.
      * <p>
      * This method coordinates the entire request processing pipeline:
-     * interceptors -> routing -> static files -> error handling
+     * interceptors - routing - static files - error handling
      *
      * @param chx Netty channel handler context
      * @param req the incoming HTTP request

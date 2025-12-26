@@ -52,10 +52,37 @@ public class HttpContext {
     }
 
     public ActionResult html(String text) {
-        response.setStatus(200);
+        return html(200, text);
+    }
+
+    public ActionResult html(int status, String text) {
+        response.setStatus(status);
         response.setContentType("text/html");
         response.setBody(text.getBytes(StandardCharsets.UTF_8));
         return ActionResult.fromResponse(response);
+    }
+
+    public ActionResult error(String text) {
+        return error(500, text);
+    }
+
+    public ActionResult error(int status, String text) {
+        response.setStatus(status);
+        response.setContentType("text/html");
+        response.setBody(text.getBytes(StandardCharsets.UTF_8));
+        return ActionResult.fromResponse(response);
+    }
+
+    public ActionResult json(String obj) {
+        try {
+            byte[] bytes = obj.getBytes(StandardCharsets.UTF_8);
+            response.setStatus(200);
+            response.setContentType("application/json");
+            response.setBody(bytes);
+            return ActionResult.fromResponse(response);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public ActionResult json(Object obj) {
@@ -73,6 +100,13 @@ public class HttpContext {
     public ActionResult file(String path) {
         response.setStatus(200);
         response.setFilePath(path);
+        return ActionResult.fromResponse(response);
+    }
+
+    public ActionResult status(int code) {
+        response.setStatus(code);
+        response.setContentType(null);
+        response.setBody(null);
         return ActionResult.fromResponse(response);
     }
 

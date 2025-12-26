@@ -60,8 +60,11 @@ public class ResponseWriter {
                     HttpResponseStatus.valueOf(data.getStatus()),
                     Unpooled.wrappedBuffer(data.getBody())
             );
-            res.headers().set(HttpHeaderNames.CONTENT_TYPE, data.getContentType());
-            res.headers().setInt(HttpHeaderNames.CONTENT_LENGTH, data.getBody().length);
+            if (data.getContentType() != null)
+                res.headers().set(HttpHeaderNames.CONTENT_TYPE, data.getContentType());
+
+            if (data.getBody() != null)
+                res.headers().setInt(HttpHeaderNames.CONTENT_LENGTH, data.getBody().length);
             data.getHeaders().forEach(res.headers()::set);
 
             applySessionCookie(res, req, session);
