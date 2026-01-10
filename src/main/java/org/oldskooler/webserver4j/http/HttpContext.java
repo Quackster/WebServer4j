@@ -124,6 +124,10 @@ public class HttpContext {
         return ActionResult.fromResponse(response);
     }
 
+    public ActionResult redirect(String location) {
+        return redirect(location, 307);
+    }
+
     public ActionResult redirect(String location, int code) {
         response.getHeaders().put("Location", location);
         response.setStatus(code);
